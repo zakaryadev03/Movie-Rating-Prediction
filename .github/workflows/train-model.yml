@@ -1,0 +1,52 @@
+name: MLOps Pipeline
+
+on:
+  schedule:
+    - cron: '0 0 * * 0'  # Weekly Sunday
+  workflow_dispatch:
+
+jobs:
+  train-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Install dependencies
+      run: |
+        pip install pandas pyarrow scikit-surprise joblib boto3 flask
+
+    - name: Download data
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_KEY }}
+      run: |
+        pip install awscli
+        aws s3 cp s3://movielens-raw-data/cleaned_data/ratings/ ./data/cloud/ratings --recursive
+        aws s3 cp s3://movielens-raw-data/cleaned_data/movies/ ./data/cloud/movies --recursive
+
+    - name: Train model
+      run: python train.py
+
+    - name: Validate model
+      run: |
+        python -c "import joblib; m = joblib.load('movie_recommender.pkl'); assert m.pu.shape[0] > 0"
+
+    - name: Upload model
+      uses: actions/upload-artifact@v3
+      with:
+        name: model
+        path: movie_recommender.pkl
+    
+    - name: Deploy model to s3
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_KEY }}
+      run: |
+        aws s3 cp movie_recommender.pkl s3://movielens-models/models/movie_recommender.pkl
