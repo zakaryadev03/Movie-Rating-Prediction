@@ -7,4 +7,7 @@ This project implements a **scalable movie prediction system** using the [MovieL
 - Dynamic dashboards for EDA (genre trends, top-rated films).  
 - Dockerized API endpoint for real-time predictions.  
 
-Ideal for learning **MLOps, cloud automation, and recommender systems**, this project demonstrates end-to-end workflows from raw data to production-ready inference. Contributions and feedback are welcome!  
+Ideal for learning **MLOps, cloud automation, and recommender systems**, this project demonstrates end-to-end workflows from raw data to production-ready inference. Contributions and feedback are welcome!
+
+## Workflow
+![Workflow](assets/Workflow.png)
