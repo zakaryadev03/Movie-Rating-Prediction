@@ -10,4 +10,4 @@ This project implements a **scalable movie prediction system** using the [MovieL
 Ideal for learning **MLOps, cloud automation, and recommender systems**, this project demonstrates end-to-end workflows from raw data to production-ready inference. Contributions and feedback are welcome!
 
 ## Workflow
-![Workflow](assets/Workflow.png)
+![Workflow](Assets/Workflow.png)
