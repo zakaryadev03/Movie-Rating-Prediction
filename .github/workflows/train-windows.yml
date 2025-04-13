@@ -24,9 +24,11 @@ jobs:
 
       - name: Train model
         run: '"C:\ProgramData\anaconda3\python.exe" train.py'
+        shell: cmd
 
       - name: Validate model
         run: '"C:\ProgramData\anaconda3\python.exe" -c "import joblib; m = joblib.load(\"movie_recommender.pkl\"); assert m.pu.shape[0] > 0"'
+        shell: cmd
 
       - name: Upload model
         uses: actions/upload-artifact@v4.3.0
