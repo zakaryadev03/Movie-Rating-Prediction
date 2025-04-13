@@ -12,20 +12,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
-      - name: Setup Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.10'
-
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          python -m pip install numpy==1.26.4
-          python -m pip install wheel
-          python -m pip install scikit-surprise==1.1.3
-          python -m pip install pandas==2.0.3 pyarrow==12.0.1 joblib==1.3.2 boto3==1.34.97 flask==3.0.3
-
+        
       - name: Download data
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -36,10 +23,10 @@ jobs:
           aws s3 cp s3://movielens-raw-data/cleaned_data/movies/ .\data\cloud\movies --recursive
 
       - name: Train model
-        run: python train.py
+        run: '"C:\ProgramData\anaconda3\python.exe" train.py'
 
       - name: Validate model
-        run: python -c "import joblib; m = joblib.load('movie_recommender.pkl'); assert m.pu.shape[0] > 0"
+        run: '"C:\ProgramData\anaconda3\python.exe" -c "import joblib; m = joblib.load(\"movie_recommender.pkl\"); assert m.pu.shape[0] > 0"'
 
       - name: Upload model
         uses: actions/upload-artifact@v4.3.0
