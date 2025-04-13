@@ -36,7 +36,6 @@ jobs:
 
       - name: Train model
         run: python train.py
-        shell: pwsh
 
       - name: Validate model
         run: python -c "import joblib; m = joblib.load('movie_recommender.pkl'); assert m.pu.shape[0] > 0"
