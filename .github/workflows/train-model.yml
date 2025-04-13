@@ -39,7 +39,7 @@ jobs:
         python -c "import joblib; m = joblib.load('movie_recommender.pkl'); assert m.pu.shape[0] > 0"
 
     - name: Upload model
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: model
         path: movie_recommender.pkl
