@@ -1,8 +1,9 @@
 name: MLOps Pipeline
 
 on:
-  schedule:
-    - cron: '0 0 * * 0'  # Weekly Sunday
+  
+  #schedule:
+   # - cron: '0 0 * * 0'  # Weekly Sunday
   workflow_dispatch:
 
 jobs:
